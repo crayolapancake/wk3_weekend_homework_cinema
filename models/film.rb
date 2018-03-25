@@ -52,18 +52,17 @@ def save
     return film_objects
   end
 
-  def show_films
-    sql = "SELECT films*
-    FROM Films
+  def show_films_by_customer_id
+    sql = "SELECT films.*
+    FROM films
     INNER JOIN tickets
     ON tickets.film_id = films.id
-    WHERE film_id = $1"
+    WHERE customer_id = $1"
     values = [@id]
     films = SqlRunner.run(sql, values)
     result = films.map{ |film| Film.new(film) }
     return result
   end
-
 
 
 

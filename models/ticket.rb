@@ -47,13 +47,18 @@ class Ticket
   end
 
   def self.all()
-   sql = "SELECT * FROM tickets"
-   ticket_hashes = SqlRunner.run(sql)
-   ticket_objects = ticket_hashes.map{|ticket| Ticket.new(ticket)}
-   return ticket_objects
+    sql = "SELECT * FROM tickets"
+    ticket_hashes = SqlRunner.run(sql)
+    ticket_objects = ticket_hashes.map{|ticket| Ticket.new(ticket)}
+    return ticket_objects
   end
 
-
+  def tickets_by_film_id()
+    sql = "SELECT * FROM tickets WHERE film_id = $1"
+    value = [@id]
+    ticket_data = SqlRunner.run( sql, values )
+    return ticket_data.map{ |ticket| Ticket.new(ticket) }
+  end
 
 
 end

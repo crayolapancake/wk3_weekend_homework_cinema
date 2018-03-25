@@ -65,7 +65,16 @@ class Customer
     return result
   end
 
-
-
+def show_customers_by_film_id
+  sql = "SELECT customers.*
+  FROM customers
+  INNER JOIN tickets
+  ON tickets.customer_id = customers.id
+  WHERE film_id = $1"
+  values = [@id]
+  films = SqlRunner.run(sql, values)
+  result = customers.map{ |customer| Customer.new(customer) }
+  return result
+end
 
 end
